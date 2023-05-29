@@ -1,17 +1,16 @@
 import React, { useState } from 'react'
 import { SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
-import { useDispatch } from 'react-redux'
-import { AppDispatch } from '../../../App'
+import { useDispatch, useSelector } from 'react-redux'
+import { AppDispatch, RootState } from '../../../App'
 import { updateBlog } from '../../redux/store/crudSlice'
-
-
+import { Theme, setTheme } from '../../redux/store/ThemeSlice'
 
 const EditBlog = ({ navigation, route }: any) => {
       let item = route.params
       const [title, setTitle] = useState<any>(item.title);
       const [description, setDescription] = useState<any>(item.description);
       let dispatch = useDispatch<AppDispatch>()
-
+      const theme = useSelector((state: RootState) => state.theme.theme);
       const handleUpdateBlog = () => {
             const data = {
                   id: item.id,
@@ -21,6 +20,33 @@ const EditBlog = ({ navigation, route }: any) => {
             dispatch(updateBlog(data));
             navigation.goBack();
       }
+
+      const styles = StyleSheet.create({
+            container: {
+                  flex: 1,
+                  backgroundColor: theme === 'light' ? 'white' : 'black',
+            },
+            text: {
+                  color: theme === 'light' ? 'black' : 'white',
+            },
+            input: {
+                  height: 40,
+                  borderColor: 'lightgray',
+                  borderWidth: 1,
+                  marginBottom: 12,
+                  paddingHorizontal: 8,
+                  borderRadius: 10,
+                  color: theme === 'light' ? 'black' : 'white',
+            },
+            goBackButton: {
+                  backgroundColor: "#42b5d7",
+                  borderRadius: 5,
+                  padding: 10,
+                  marginBottom: 10,
+                  alignItems: 'center',
+                  width: 100,
+            }
+      })
 
       return (
             <SafeAreaView style={styles.container}>
@@ -45,26 +71,3 @@ const EditBlog = ({ navigation, route }: any) => {
 }
 
 export default EditBlog
-
-const styles = StyleSheet.create({
-      container: {
-            flex: 1,
-            margin: 15,
-      },
-      input: {
-            height: 40,
-            borderColor: 'lightgray',
-            borderWidth: 1,
-            marginBottom: 12,
-            paddingHorizontal: 8,
-            borderRadius: 10,
-      },
-      goBackButton: {
-            backgroundColor: "#42b5d7",
-            borderRadius: 5,
-            padding: 10,
-            marginBottom: 10,
-            alignItems: 'center',
-            width: 100,
-      }
-})

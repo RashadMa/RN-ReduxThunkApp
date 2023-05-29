@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { View, TextInput, Button, Image, StyleSheet, TouchableOpacity, Text, SafeAreaView } from 'react-native';
-import { AppDispatch } from '../../../App';
-import { useDispatch } from 'react-redux';
+import { SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootState } from '../../../App';
 import { addBlog } from '../../redux/store/crudSlice';
+import { Theme, setTheme } from '../../redux/store/ThemeSlice';
 
 interface FormData {
       title: string;
@@ -16,6 +17,8 @@ const AddBlog = ({ navigation }: any) => {
             description:
                   "Consequatur beatae quaerat. Animi eius quibusdam iure reiciendis labore exercitationem assumenda ducimus. Nulla molestias sequi. Tempora alias deleniti temporibus fugit ratione officia quo.",
       });
+
+      const theme = useSelector((state: RootState) => state.theme.theme);
       let dispatch = useDispatch<AppDispatch>()
 
       const handleChange = (key: keyof FormData, value: string) => {
@@ -36,9 +39,36 @@ const AddBlog = ({ navigation }: any) => {
             navigation.navigate('bloglist')
       }
 
+      const styles = StyleSheet.create({
+            container: {
+                  flex: 1,
+                  backgroundColor: theme === 'light' ? 'white' : 'black',
+            },
+            text: {
+                  color: theme === 'light' ? 'black' : 'white',
+            },
+            input: {
+                  height: 40,
+                  borderColor: 'lightgray',
+                  borderWidth: 1,
+                  marginBottom: 12,
+                  paddingHorizontal: 8,
+                  borderRadius: 10,
+                  color: theme === 'light' ? 'black' : 'white',
+            },
+            goBackButton: {
+                  backgroundColor: "#42b5d7",
+                  borderRadius: 5,
+                  padding: 10,
+                  marginBottom: 10,
+                  alignItems: 'center',
+                  width: 100,
+            }
+      });
+
       return (
             <SafeAreaView style={styles.container}>
-                  <TouchableOpacity style={styles.goBackButton} onPress={() => navigation.navigate('bloglist')}><Text style={{ color: "white" }}>Go Back</Text></TouchableOpacity>
+                  <TouchableOpacity style={styles.goBackButton} onPress={() => navigation.navigate('bloglist')}><Text style={styles.text}>Go Back</Text></TouchableOpacity>
                   <View>
                         <TextInput
                               style={styles.input}
@@ -57,34 +87,12 @@ const AddBlog = ({ navigation }: any) => {
                               value={formData.description}
                               onChangeText={(value) => handleChange('description', value)}
                               placeholder="description"
+                              placeholderTextColor={theme === 'light' ? 'black' : 'white'}
                         />
-                        <TouchableOpacity style={styles.goBackButton} onPress={handleAddBlog}><Text style={{ color: "white" }}>Add Blog</Text></TouchableOpacity>
+                        <TouchableOpacity style={styles.goBackButton} onPress={handleAddBlog}><Text style={styles.text}>Add Blog</Text></TouchableOpacity>
                   </View>
             </SafeAreaView>
       );
 };
-
-const styles = StyleSheet.create({
-      container: {
-            flex: 1,
-            margin: 15,
-      },
-      input: {
-            height: 40,
-            borderColor: 'lightgray',
-            borderWidth: 1,
-            marginBottom: 12,
-            paddingHorizontal: 8,
-            borderRadius: 10,
-      },
-      goBackButton: {
-            backgroundColor: "#42b5d7",
-            borderRadius: 5,
-            padding: 10,
-            marginBottom: 10,
-            alignItems: 'center',
-            width: 100,
-      }
-});
 
 export default AddBlog;
