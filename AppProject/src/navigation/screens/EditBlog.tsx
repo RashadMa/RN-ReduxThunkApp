@@ -3,7 +3,6 @@ import { SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View } fro
 import { useDispatch, useSelector } from 'react-redux'
 import { AppDispatch, RootState } from '../../../App'
 import { updateBlog } from '../../redux/store/crudSlice'
-import { Theme, setTheme } from '../../redux/store/ThemeSlice'
 
 const EditBlog = ({ navigation, route }: any) => {
       let item = route.params

@@ -3,7 +3,6 @@ import { SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View } fro
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../../App';
 import { addBlog } from '../../redux/store/crudSlice';
-import { Theme, setTheme } from '../../redux/store/ThemeSlice';
 
 interface FormData {
       title: string;
