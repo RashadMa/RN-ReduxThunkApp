@@ -3,6 +3,7 @@ import React from 'react'
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import BlogList from '../screens/BlogList';
 import AddBlog from '../screens/AddBlog';
+import EditBlog from '../screens/EditBlog';
 const Home = createNativeStackNavigator();
 
 const BlogStack = () => {
@@ -10,7 +11,7 @@ const BlogStack = () => {
             <Home.Navigator screenOptions={{ headerShown: false }}>
                   <Home.Screen name="bloglist" component={BlogList} />
                   <Home.Screen name="addblog" component={AddBlog} />
-                  {/* <Home.Screen name="editblog" component={EditBlog} /> */}
+                  <Home.Screen name="editblog" component={EditBlog} />
             </Home.Navigator>
 
       )

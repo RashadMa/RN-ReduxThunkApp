@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, TextInput, Button, Image, StyleSheet, TouchableOpacity, Text, SafeAreaView } from 'react-native';
 import { AppDispatch } from '../../../App';
 import { useDispatch } from 'react-redux';
@@ -10,7 +10,7 @@ interface FormData {
       description: string;
 }
 const AddBlog = ({ navigation }: any) => {
-      const [formData, setFormData] = React.useState<FormData>({
+      const [formData, setFormData] = useState<FormData>({
             title: "Example Blog",
             avatar: "https://loremflickr.com/640/480/nightlife",
             description:

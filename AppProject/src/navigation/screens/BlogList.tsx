@@ -22,7 +22,7 @@ const BlogList = ({ navigation }: any) => {
                   <View style={styles.blogWrapper}>
                         <Text style={styles.blogs}>{item.title}</Text>
                         <TouchableOpacity style={styles.deleteButton} onPress={() => handleDeleteBlog(item)}><Text style={styles.buttonText}>Delete</Text></TouchableOpacity>
-                        <TouchableOpacity style={styles.editButton}><Text style={styles.buttonText}>Edit</Text></TouchableOpacity>
+                        <TouchableOpacity style={styles.editButton} onPress={() => navigation.navigate('editblog', item)}><Text style={styles.buttonText}>Edit</Text></TouchableOpacity>
                   </View>
             </>
       }
