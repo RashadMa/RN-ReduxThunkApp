@@ -115,7 +115,6 @@ const BlogList = ({ navigation }: any) => {
                         ) : (
                               <FlatList
                                     refreshing={false}
-                                    //   onRefresh={getBlog}
                                     data={filteredData}
                                     renderItem={renderItem}
                                     keyExtractor={(item: any) => item.id}
