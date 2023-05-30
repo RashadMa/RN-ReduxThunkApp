@@ -6,14 +6,13 @@ import { Provider } from 'react-redux'
 import BlogStack from './src/navigation/stacks/BlogStack'
 import BlogReducer from './src/redux/store/crudSlice'
 import ThemeReducer from './src/redux/store/ThemeSlice'
-import MyComponent from './src/navigation/screens/Dark'
 
 export type RootState = ReturnType<typeof store.getState>
 export type AppDispatch = typeof store.dispatch
 const store = configureStore({
   reducer: {
     BlogReducer,
-    theme :ThemeReducer
+    theme: ThemeReducer
   }
 })
 
@@ -22,7 +21,6 @@ const App = () => {
     <Provider store={store}  >
       <NavigationContainer>
         <BlogStack />
-        {/* <MyComponent /> */}
       </NavigationContainer>
     </Provider>
   )
