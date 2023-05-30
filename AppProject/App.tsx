@@ -5,8 +5,9 @@ import { StyleSheet } from 'react-native'
 import { Provider } from 'react-redux'
 import BlogReducer from './src/redux/store/crudSlice'
 import ThemeReducer from './src/redux/store/ThemeSlice'
-import SaveReducer from './src/redux/store/SaveSlice'
+import SaveReducer, { saveSlice } from './src/redux/store/SaveSlice'
 import TabMain from './src/navigation/TabMain'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 export type RootState = ReturnType<typeof store.getState>
 export type AppDispatch = typeof store.dispatch
@@ -14,9 +15,12 @@ const store = configureStore({
   reducer: {
     BlogReducer,
     theme: ThemeReducer,
-    SaveReducer,
+    // SaveReducer,
+    save: saveSlice.reducer,
   }
 })
+
+// AsyncStorage.clear()
 
 const App = () => {
   return (

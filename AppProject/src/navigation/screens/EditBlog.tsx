@@ -1,8 +1,9 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
 import { AppDispatch, RootState } from '../../../App'
 import { updateBlog } from '../../redux/store/crudSlice'
+import { addSave, removeSave } from '../../redux/store/SaveSlice'
 
 const EditBlog = ({ navigation, route }: any) => {
       let item = route.params
@@ -19,6 +20,26 @@ const EditBlog = ({ navigation, route }: any) => {
             dispatch(updateBlog(data));
             navigation.goBack();
       }
+
+      const [isSaved, setIsSaved] = useState(false);
+      const save = useSelector<RootState, any>(
+            (state: RootState) => state.save.save,
+      );
+      const savedItemIds = save.map((item: any) => item.id);
+      useEffect(() => {
+            setIsSaved(savedItemIds.includes(item.id));
+      }, [savedItemIds, item.id]);
+
+      const handleSave = (item: any) => {
+            if (isSaved) {
+                  dispatch(removeSave(item));
+            } else {
+                  dispatch(addSave(item));
+            }
+      };
+      let { BlogReducer } = useSelector<RootState, any>(state => state);
+
+
 
 
       const styles = StyleSheet.create({
@@ -64,6 +85,10 @@ const EditBlog = ({ navigation, route }: any) => {
                               onChangeText={setDescription}
                               placeholder="Title"
                         />
+                        <TouchableOpacity
+                              onPress={() => handleSave(BlogReducer.blogs)}>
+                                    <Text>Save</Text>
+                        </TouchableOpacity>
                         <TouchableOpacity style={styles.goBackButton} onPress={() => handleUpdateBlog()}><Text style={{ color: "white" }}>Submit</Text></TouchableOpacity>
                   </View>
             </SafeAreaView>

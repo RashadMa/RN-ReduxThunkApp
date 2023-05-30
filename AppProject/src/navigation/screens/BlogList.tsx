@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../../App';
 import { deleteBlog, getAllBlogs, } from '../../redux/store/crudSlice';
 import { Theme, setTheme } from '../../redux/store/ThemeSlice';
-import { saveData } from '../../redux/store/SaveSlice';
+// import { saveData } from '../../redux/store/SaveSlice';
 
 const BlogList = ({ navigation }: any) => {
       let dispatch = useDispatch<AppDispatch>()
@@ -14,7 +14,6 @@ const BlogList = ({ navigation }: any) => {
             dispatch(setTheme(newTheme));
       };
       const [searchItems, setSearchItems] = useState('');
-      const [name, setName] = useState('');
 
       let { BlogReducer } = useSelector<RootState, any>(state => state);
 
@@ -30,16 +29,16 @@ const BlogList = ({ navigation }: any) => {
             item.title.toLowerCase().includes(searchItems.toLowerCase()),
       );
 
-      const handleSave = (data: any) => {
-            dispatch(saveData(data));
-            console.log(data);
-      };
+      // const handleSave = (data: any) => {
+      //       dispatch(saveData(data));
+      //       console.log(data);
+      // };
 
       const renderItem = ({ item }: any) => {
             return <>
                   <View style={styles.blogWrapper}>
                         <Text style={[styles.blogs, styles.text]}>{item.title}</Text>
-                        <TouchableOpacity style={styles.saveButton} onPress={() => handleSave(item)}><Text style={styles.buttonText}>Save</Text></TouchableOpacity>
+                        {/* <TouchableOpacity style={styles.saveButton} onPress={() => handleSave(item)}><Text style={styles.buttonText}>Save</Text></TouchableOpacity> */}
                         <TouchableOpacity style={styles.deleteButton} onPress={() => handleDeleteBlog(item)}><Text style={styles.buttonText}>Delete</Text></TouchableOpacity>
                         <TouchableOpacity style={styles.editButton} onPress={() => navigation.navigate('editblog', item)}><Text style={styles.buttonText}>Edit</Text></TouchableOpacity>
                   </View>
