@@ -19,6 +19,8 @@ const EditBlog = ({ navigation, route }: any) => {
             dispatch(updateBlog(data));
             navigation.goBack();
       }
+      console.log("salam");
+      
 
       const styles = StyleSheet.create({
             container: {
