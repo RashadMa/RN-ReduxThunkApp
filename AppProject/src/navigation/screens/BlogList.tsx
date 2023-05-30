@@ -1,5 +1,5 @@
-import { FlatList, SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import React, { useEffect } from 'react'
+import { FlatList, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../../App';
 import { deleteBlog, getAllBlogs, } from '../../redux/store/crudSlice';
@@ -12,11 +12,12 @@ const BlogList = ({ navigation }: any) => {
             const newTheme: Theme = theme === 'light' ? 'dark' : 'light';
             dispatch(setTheme(newTheme));
       };
+      const [searchItems, setSearchItems] = useState('');
 
       let { BlogReducer } = useSelector<RootState, any>(state => state);
 
       useEffect(() => {
-            dispatch(getAllBlogs())
+            dispatch(getAllBlogs());
       }, [])
 
       const handleDeleteBlog = (blog: any) => {
@@ -27,11 +28,15 @@ const BlogList = ({ navigation }: any) => {
             return <>
                   <View style={styles.blogWrapper}>
                         <Text style={[styles.blogs, styles.text]}>{item.title}</Text>
-                        <TouchableOpacity style={styles.deleteButton} onPress={() => handleDeleteBlog(item)}><Text style={[styles.buttonText, styles.text]}>Delete</Text></TouchableOpacity>
-                        <TouchableOpacity style={styles.editButton} onPress={() => navigation.navigate('editblog', item)}><Text style={[styles.buttonText, styles.text]}>Edit</Text></TouchableOpacity>
+                        <TouchableOpacity style={styles.deleteButton} onPress={() => handleDeleteBlog(item)}><Text style={styles.buttonText}>Delete</Text></TouchableOpacity>
+                        <TouchableOpacity style={styles.editButton} onPress={() => navigation.navigate('editblog', item)}><Text style={styles.buttonText}>Edit</Text></TouchableOpacity>
                   </View>
             </>
       }
+
+      const filteredData = BlogReducer.blogs.filter((item: { title: string; }) =>
+            item.title.toLowerCase().includes(searchItems.toLowerCase()),
+      );
 
       const styles = StyleSheet.create({
             container: {
@@ -78,22 +83,45 @@ const BlogList = ({ navigation }: any) => {
                   color: 'white',
                   fontSize: 17,
             },
+            input: {
+                  height: 40,
+                  borderColor: 'lightgray',
+                  borderWidth: 1,
+                  marginBottom: 12,
+                  paddingHorizontal: 8,
+                  borderRadius: 10,
+                  color: theme === 'light' ? 'black' : 'white',
+            },
       });
 
       return (
             <SafeAreaView style={styles.container}>
                   <TouchableOpacity style={styles.addBlogButton} onPress={toggleTheme}>
-                        <Text style={styles.text}>Toggle Theme</Text>
+                        <Text style={{ color: 'white' }}>Toggle Theme</Text>
                   </TouchableOpacity>
                   <TouchableOpacity style={styles.addBlogButton} onPress={() => navigation.navigate('addblog')}>
-                        <Text style={[styles.addBlogText, styles.text]}>Add Blog</Text>
+                        <Text style={styles.addBlogText}>Add Blog</Text>
                   </TouchableOpacity>
+                  <TextInput
+                        placeholder="Search"
+                        placeholderTextColor={theme === 'dark' ? '#fff' : '#000'}
+                        style={styles.input}
+                        value={searchItems}
+                        onChangeText={setSearchItems}
+                  />
                   {
-                        BlogReducer.loading ? <Text style={{ fontSize: 30 }}>Loading...</Text> : <FlatList
-                              showsVerticalScrollIndicator={false}
-                              data={BlogReducer.blogs}
-                              renderItem={renderItem}
-                        />
+                        filteredData.length === 0 ? (
+                              <Text>There is no any blog</Text>
+                        ) : (
+                              <FlatList
+                                    refreshing={false}
+                                    //   onRefresh={getBlog}
+                                    data={filteredData}
+                                    renderItem={renderItem}
+                                    keyExtractor={(item: any) => item.id}
+                                    showsVerticalScrollIndicator={false}
+                              />
+                        )
                   }
             </SafeAreaView>
       )

@@ -67,7 +67,7 @@ const AddBlog = ({ navigation }: any) => {
 
       return (
             <SafeAreaView style={styles.container}>
-                  <TouchableOpacity style={styles.goBackButton} onPress={() => navigation.navigate('bloglist')}><Text style={styles.text}>Go Back</Text></TouchableOpacity>
+                  <TouchableOpacity style={styles.goBackButton} onPress={() => navigation.navigate('bloglist')}><Text style={{ color: 'white' }}>Go Back</Text></TouchableOpacity>
                   <View>
                         <TextInput
                               style={styles.input}
@@ -88,7 +88,7 @@ const AddBlog = ({ navigation }: any) => {
                               placeholder="description"
                               placeholderTextColor={theme === 'light' ? 'black' : 'white'}
                         />
-                        <TouchableOpacity style={styles.goBackButton} onPress={handleAddBlog}><Text style={styles.text}>Add Blog</Text></TouchableOpacity>
+                        <TouchableOpacity style={styles.goBackButton} onPress={handleAddBlog}><Text style={{ color: 'white' }}>Add Blog</Text></TouchableOpacity>
                   </View>
             </SafeAreaView>
       );
