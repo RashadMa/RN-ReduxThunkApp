@@ -3,16 +3,18 @@ import { configureStore } from '@reduxjs/toolkit'
 import React from 'react'
 import { StyleSheet } from 'react-native'
 import { Provider } from 'react-redux'
-import BlogStack from './src/navigation/stacks/BlogStack'
 import BlogReducer from './src/redux/store/crudSlice'
 import ThemeReducer from './src/redux/store/ThemeSlice'
+import SaveReducer from './src/redux/store/SaveSlice'
+import TabMain from './src/navigation/TabMain'
 
 export type RootState = ReturnType<typeof store.getState>
 export type AppDispatch = typeof store.dispatch
 const store = configureStore({
   reducer: {
     BlogReducer,
-    theme: ThemeReducer
+    theme: ThemeReducer,
+    SaveReducer,
   }
 })
 
@@ -20,7 +22,7 @@ const App = () => {
   return (
     <Provider store={store}  >
       <NavigationContainer>
-        <BlogStack />
+        <TabMain />
       </NavigationContainer>
     </Provider>
   )
